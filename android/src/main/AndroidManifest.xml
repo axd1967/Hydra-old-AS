@@ -75,7 +75,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".settings.Settings" />   
         </activity>
-        
+
+        <!--FIXME delete this? where is it? -->
         <activity android:name=".settings.FacebookAuthHelper"
                   android:configChanges="screenSize|orientation" >
             <intent-filter>
@@ -150,12 +151,19 @@
         </activity>
         
         <activity android:name=".RestoMenu"
-                  android:configChanges="screenSize|orientation">             
+                  android:configChanges="screenSize|orientation"
+            android:parentActivityName=".Hydra"
+            >
+            <!--android:launchMode="singleTask"-->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Hydra" />   
-
+                android:value=".Hydra" />
         </activity>
+
         <activity android:name=".SchamperDaily"
                   android:configChanges="screenSize|orientation">             
             <meta-data

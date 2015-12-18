@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.ResultReceiver;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -55,6 +57,7 @@ public class RestoMenu extends AbstractSherlockActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         setTitle(R.string.title_menu);
         setContentView(R.layout.menu);
@@ -208,6 +211,11 @@ public class RestoMenu extends AbstractSherlockActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+
+            case android.R.id.home:
+                dealWithUpNav();
+                return true;
+
             case R.id.show_about:
                 showAboutDialog();
                 return true;
@@ -217,6 +225,26 @@ public class RestoMenu extends AbstractSherlockActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+// see also http://developer.android.com/training/implementing-navigation/ancestral.html#NavigateUp
+    private void dealWithUpNav() {
+
+        Intent upIntent = NavUtils.getParentActivityIntent(this);
+
+        if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+            // This activity is NOT part of this app's task, so create a new task
+            // when navigating up, with a synthesized back stack.
+            TaskStackBuilder.create(this)
+                    // Add all of this activity's parents to the back stack
+                    .addNextIntentWithParentStack(upIntent)
+                            // Navigate up to the closest parent
+                    .startActivities();
+        } else {
+            // This activity is part of this app's task, so simply
+            // navigate up to the logical parent activity.
+            NavUtils.navigateUpTo(this, upIntent);
         }
     }
 
