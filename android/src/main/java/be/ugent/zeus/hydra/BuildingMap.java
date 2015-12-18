@@ -132,7 +132,7 @@ public class BuildingMap extends AbstractSherlockFragmentActivity implements Goo
     public void setUpMap() {
         try {
             MapsInitializer.initialize(this);
-        } catch (GooglePlayServicesNotAvailableException ex) {
+        } catch (Exception  ex) {
             Log.e("GPS:", "Error" + ex);
         }
 
